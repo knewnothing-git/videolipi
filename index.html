@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videolipi - Coming Soon</title>
+    <meta name="description" content="Transform videos into AI-ready prompts. Join the waitlist for early access.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+        
+        @font-face {
+            font-family: 'Bebas Neue';
+            font-style: normal;
+            font-weight: 400;
+            src: url('https://fonts.gstatic.com/s/bebasneue/v14/JTUSjIg69CK48gW7PXooxW5rygbi49c.woff2') format('woff2');
+            font-display: swap;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Navigation */
+        nav {
+            padding: 3rem 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        
+        .logo-icon {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .logo {
+            font-family: 'Bebas Neue', 'Arial Black', 'Impact', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            color: #fff;
+        }
+        
+        .logo-highlight {
+            color: #ff0000;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: calc(100vh - 120px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #ff0000;
+            color: #fff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .hero h1 {
+            font-family: 'Bebas Neue', 'Arial Black', 'Impact', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 400;
+            line-height: 0.95;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+        
+        .hero h1 .line-2 {
+            color: #ff0000;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            color: #999;
+            margin-bottom: 4rem;
+            line-height: 1.7;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+        
+        .hero p strong {
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        /* Waitlist Form */
+        .waitlist-form {
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 0.8s ease 0.6s backwards;
+        }
+        
+        .form-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group input {
+            flex: 1;
+            padding: 1.2rem 1.5rem;
+            background: #0a0a0a;
+            border: 2px solid #1a1a1a;
+            border-radius: 2px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff0000;
+            background: #000;
+        }
+        
+        .form-group input::placeholder {
+            color: #666;
+        }
+        
+        .submit-button {
+            width: 100%;
+            background: #ff0000;
+            color: #fff;
+            padding: 1.2rem 2rem;
+            border: none;
+            border-radius: 2px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .submit-button:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
+        }
+        
+        .submit-button:active {
+            transform: translateY(0);
+        }
+        
+        .submit-button:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .success-message {
+            background: #ff0000;
+            color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 2px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        .form-note {
+            text-align: center;
+            color: #666;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+        
+        /* Stats Counter */
+        .waitlist-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin: 3rem 0;
+            padding: 3rem 0;
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+            animation: fadeInUp 0.8s ease 0.8s backwards;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-family: 'Bebas Neue', 'Arial Black', 'Impact', sans-serif;
+            font-size: 4rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            color: #ff0000;
+        }
+        
+        .stat-label {
+            color: #666;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+        }
+        
+        /* Features Preview */
+        .features-preview {
+            margin-top: 6rem;
+            animation: fadeInUp 0.8s ease 1s backwards;
+        }
+        
+        .features-title {
+            text-align: center;
+            font-family: 'Bebas Neue', 'Arial Black', 'Impact', sans-serif;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #fff;
+            margin-bottom: 3rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            border: 2px solid #1a1a1a;
+            border-radius: 2px;
+            transition: all 0.3s;
+            background: #0a0a0a;
+        }
+        
+        .feature-item:hover {
+            border-color: #ff0000;
+            transform: translateY(-5px);
+            background: #000;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-name {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            color: #fff;
+        }
+        
+        /* Social Proof */
+        .social-proof {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 4rem;
+            border-top: 1px solid #1a1a1a;
+            animation: fadeInUp 0.8s ease 1.2s backwards;
+        }
+        
+        .social-proof p {
+            color: #666;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #1a1a1a;
+            border-radius: 2px;
+            background: #0a0a0a;
+        }
+        
+        .social-links a:hover {
+            border-color: #ff0000;
+            color: #ff0000;
+            background: #000;
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: clamp(2.5rem, 12vw, 5rem);
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+                margin-bottom: 3rem;
+            }
+            
+            .form-group {
+                flex-direction: column;
+            }
+            
+            .waitlist-stats {
+                gap: 2rem;
+                flex-wrap: wrap;
+            }
+            
+            .stat-number {
+                font-size: 3rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            
+            .social-links a {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo-icon">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+                <path d="M0 0 C165 0 330 0 500 0 C500 165 500 330 500 500 C335 500 170 500 0 500 C0 335 0 170 0 0 Z " fill="#000000" transform="translate(0,0)"/>
+                <path d="M0 0 C8.16900203 4.0001105 12.90981004 14.7628231 15.890625 22.92578125 C19.33056601 34.35470365 21.98518231 46.17228072 22.05175781 58.13598633 C22.05920517 59.16216568 22.05920517 59.16216568 22.06680298 60.20907593 C22.08130653 62.45449875 22.08821077 64.69985067 22.09375 66.9453125 C22.09799107 68.11004876 22.09799107 68.11004876 22.10231781 69.29831505 C22.11727111 73.41689767 22.12652189 77.53544568 22.13085938 81.65405273 C22.13630345 85.85486208 22.16025554 90.05534062 22.18883133 94.25604725 C22.20770539 97.53113136 22.21267649 100.8061402 22.21419525 104.08127403 C22.21717266 105.62663241 22.22502867 107.17199112 22.23838043 108.71729469 C22.4875833 139.80711609 13.0924767 161.56672449 -7.96875 184.5390625 C-9.52614395 186.27549991 -11.0199337 188.06962359 -12.47265625 189.89453125 C-15.15061096 193.12752114 -18.198896 195.60327594 -21.546875 198.11328125 C-22.09408203 198.53802734 -22.64128906 198.96277344 -23.20507812 199.40039062 C-27.63115881 202.76840232 -31.83296973 205.53178803 -37.359375 206.48828125 C-47.0510338 205.03453243 -54.30128937 197.47117547 -61.109375 190.92578125 C-62.21925781 189.89324219 -62.21925781 189.89324219 -63.3515625 188.83984375 C-81.91778162 171.06648808 -95.2537168 150.15448404 -96.21753693 123.98949051 C-96.37654797 116.11543461 -96.34614296 108.24086235 -96.31216288 100.36566472 C-96.29951107 96.93042511 -96.2984738 93.49518058 -96.29611206 90.05992126 C-96.28993916 83.5792658 -96.27358619 77.09867922 -96.25341308 70.61805385 C-96.23092223 63.22970639 -96.22002777 55.84135534 -96.21002221 48.45298207 C-96.18921533 33.27720398 -96.15259271 18.10151518 -96.109375 2.92578125 C-83.239375 2.92578125 -70.369375 2.92578125 -57.109375 2.92578125 C-57.09479248 6.6338501 -57.08020996 10.34191895 -57.06518555 14.16235352 C-57.01469982 26.45582925 -56.94822744 38.74917581 -56.87366009 51.0425272 C-56.82886496 58.49114623 -56.78941373 65.93971919 -56.76293945 73.38842773 C-56.73982644 79.88748511 -56.70628275 86.38639464 -56.66067344 92.88533443 C-56.63691865 96.3203579 -56.61807467 99.75523658 -56.61176109 103.19034004 C-56.55326584 126.38706014 -56.44920013 146.48054685 -39.109375 163.92578125 C-36.7610542 163.8893692 -36.7610542 163.8893692 -34.109375 162.92578125 C-32.35535695 160.91147047 -30.96986291 159.08868739 -29.546875 156.86328125 C-28.95990845 155.97092773 -28.95990845 155.97092773 -28.36108398 155.06054688 C-27.25759467 153.36151998 -26.18257227 151.64410272 -25.109375 149.92578125 C-24.64789063 149.20519531 -24.18640625 148.48460937 -23.7109375 147.7421875 C-17.7620147 137.34275479 -18.80808581 123.84312651 -18.84375 112.22265625 C-18.84239844 110.64853862 -18.84045385 109.0744214 -18.83795166 107.50030518 C-18.83502693 104.22607386 -18.83921395 100.95195274 -18.84863281 97.67773438 C-18.86006382 93.50317054 -18.85342802 89.32886294 -18.84148788 85.15430832 C-18.83422944 81.91304626 -18.83657479 78.67184409 -18.84174347 75.43058014 C-18.843067 73.89175637 -18.84147831 72.35292698 -18.83678436 70.8141098 C-18.81084248 59.93050245 -19.31918108 50.75068869 -24.359375 40.86328125 C-24.66294922 40.26402832 -24.96652344 39.66477539 -25.27929688 39.04736328 C-27.47697681 34.82448246 -29.98657174 31.13057472 -33.140625 27.57421875 C-34.109375 25.92578125 -34.109375 25.92578125 -33.90942383 24.00512695 C-32.87393748 21.31387361 -31.67847745 20.57544112 -29.27734375 19.0078125 C-28.08733765 18.21528076 -28.08733765 18.21528076 -26.87329102 17.40673828 C-26.02307373 16.85614746 -25.17285645 16.30555664 -24.296875 15.73828125 C-22.55819695 14.5885024 -20.82121702 13.43615161 -19.0859375 12.28125 C-18.23547852 11.71583496 -17.38501953 11.15041992 -16.50878906 10.56787109 C-12.32381547 7.70379576 -8.38729592 4.54060606 -4.45703125 1.33984375 C-2.109375 -0.07421875 -2.109375 -0.07421875 0 0 Z " fill="#FDFDFD" transform="translate(179.109375,152.07421875)"/>
+                <path d="M0 0 C10.89 0 21.78 0 33 0 C33 44.88 33 89.76 33 136 C22.11 136 11.22 136 0 136 C0 91.12 0 46.24 0 0 Z " fill="#D31010" transform="translate(310,154)"/>
+                <path d="M0 0 C2.48605906 1.4066936 4.62688481 3.10538108 6.8125 4.9375 C7.41344482 5.42895508 8.01438965 5.92041016 8.63354492 6.42675781 C10.44350266 7.9282739 12.22623393 9.45596266 14 11 C14.52722656 11.45713379 15.05445313 11.91426758 15.59765625 12.38525391 C23.59534758 19.45109935 23.59534758 19.45109935 24.9296875 24.55859375 C25 28 25 28 23.98828125 30.08203125 C6.51629815 48.12419561 6.51629815 48.12419561 -3 51 C-8.44673405 50.857258 -11.75904099 48.35056002 -15.8125 45 C-16.72563965 44.26330078 -16.72563965 44.26330078 -17.65722656 43.51171875 C-23.65538395 38.6015402 -29.67809526 33.48285712 -34 27 C-33.45870588 19.79042304 -27.32723626 15.08521543 -22.25 10.5 C-20.84395186 9.32055768 -19.42624631 8.15493593 -18 7 C-17.10667969 6.2575 -16.21335938 5.515 -15.29296875 4.75 C-14.35066406 4.0075 -13.40835938 3.265 -12.4375 2.5 C-11.56996094 1.8090625 -10.70242187 1.118125 -9.80859375 0.40625 C-5.98276283 -1.50932598 -4.08873106 -1.17139027 0 0 Z " fill="#FBFBFB" transform="translate(261,194)"/>
+                <path d="M0 0 C8.3545692 4.74864572 21.33454281 14.26893011 26 23 C26.02175746 27.01969162 25.22105327 28.71758539 22.734375 31.89453125 C21.755701 32.88340325 20.75982707 33.85546295 19.75 34.8125 C19.22003418 35.32659424 18.69006836 35.84068848 18.14404297 36.37036133 C3.07373034 50.60441503 3.07373034 50.60441503 -6 51 C-12.07988948 48.66246673 -17.34809796 43.16213302 -22.3125 39 C-22.91126953 38.50218018 -23.51003906 38.00436035 -24.12695312 37.49145508 C-27.77433486 34.35846084 -30.75953265 31.33118625 -33 27 C-32.8192772 20.20281472 -26.92695692 15.87828193 -22.37109375 11.4375 C-7.88360771 -2.10295983 -7.88360771 -2.10295983 0 0 Z " fill="#FCFCFC" transform="translate(399,194)"/>
+                <path d="M0 0 C8.3545692 4.74864572 21.33454281 14.26893011 26 23 C26.02175746 27.01969162 25.22105327 28.71758539 22.734375 31.89453125 C21.755701 32.88340325 20.75982707 33.85546295 19.75 34.8125 C19.22003418 35.32659424 18.69006836 35.84068848 18.14404297 36.37036133 C2.81583153 50.8480029 2.81583153 50.8480029 -6 51 C-8.640625 49.6640625 -8.640625 49.6640625 -11.25 47.625 C-12.19746094 46.88636719 -13.14492188 46.14773438 -14.12109375 45.38671875 C-28.25405612 33.66997519 -28.25405612 33.66997519 -33 27 C-32.69044679 20.42466294 -27.42621228 16.35513442 -23 12 C-19.44128646 8.8486978 -15.77212136 5.8907846 -12 3 C-11.39929688 2.51015625 -10.79859375 2.0203125 -10.1796875 1.515625 C-6.48365394 -1.30961531 -4.4025208 -1.11290489 0 0 Z " fill="#D41010" transform="translate(368,314)"/>
+            </svg>
+        </div>
+        <div class="logo">
+            <span class="logo-text">VIDEO</span><span class="logo-highlight">LIPI</span>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">Coming Soon</div>
+                
+                <h1>
+                    TRANSFORM VIDEOS INTO<br>
+                    <span class="line-2">AI-READY PROMPTS</span>
+                </h1>
+                
+                <p>
+                    <strong>AI can't watch videos—but it can read them.</strong> Videolipi converts any video into structured transcripts and ready-to-use AI prompts, so you can instantly chat with ChatGPT, Claude, or any AI about your video content.
+                </p>
+                
+                <div class="waitlist-form">
+                    <form id="waitlistForm">
+                        <div class="form-group">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                placeholder="Enter your email"
+                                required
+                            >
+                        </div>
+                        <button type="submit" class="submit-button">
+                            Join Waitlist
+                        </button>
+                        <div class="success-message" id="successMessage">
+                            ✓ You're on the list! We'll notify you when we launch.
+                        </div>
+                        <p class="form-note">Be among the first to get access. No spam, ever.</p>
+                    </form>
+                </div>
+                
+                <div class="waitlist-stats">
+                    <div class="stat">
+                        <div class="stat-number" id="waitlistCount">247</div>
+                        <div class="stat-label">On Waitlist</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Platforms</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">AI Prompts</div>
+                    </div>
+                </div>
+                
+                <div class="features-preview">
+                    <h3 class="features-title">What's Coming</h3>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon">🔗</div>
+                            <div class="feature-name">Link Support</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🤖</div>
+                            <div class="feature-name">AI Prompts</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <div class="feature-name">Fast Processing</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-name">Multi-Format Export</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="social-proof">
+                    <p>Stay Connected</p>
+                    <div class="social-links">
+                        <a href="https://twitter.com/videolipi" target="_blank">Twitter</a>
+                        <a href="https://linkedin.com/company/videolipi" target="_blank">LinkedIn</a>
+                        <a href="mailto:hello@videolipi.com">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Waitlist form handling
+        const form = document.getElementById('waitlistForm');
+        const successMessage = document.getElementById('successMessage');
+        const submitButton = form.querySelector('button[type="submit"]');
+        const emailInput = document.getElementById('email');
+        const waitlistCount = document.getElementById('waitlistCount');
+        
+        // Simulate increasing waitlist count
+        let count = 247;
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                count += Math.floor(Math.random() * 3) + 1;
+                waitlistCount.textContent = count;
+            }
+        }, 30000);
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = emailInput.value;
+            
+            submitButton.disabled = true;
+            submitButton.textContent = 'Joining...';
+            
+            setTimeout(() => {
+                form.querySelector('.form-group').style.display = 'none';
+                submitButton.style.display = 'none';
+                document.querySelector('.form-note').style.display = 'none';
+                successMessage.classList.add('show');
+                
+                count++;
+                waitlistCount.textContent = count;
+                
+                const waitlist = JSON.parse(localStorage.getItem('waitlist') || '[]');
+                waitlist.push({
+                    email: email,
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('waitlist', JSON.stringify(waitlist));
+                
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
