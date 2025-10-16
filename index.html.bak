@@ -203,14 +203,7 @@
             cursor: not-allowed;
             transform: none;
         }
-        .message {
-			padding: 1rem 1.5rem;
-			border-radius: 2px;
-			text-align: center;
-			font-weight: 600;
-			margin-top: 1rem;
-			display: none;
-		}
+        
         .success-message {
             background: #ff0000;
             color: #fff;
@@ -554,8 +547,8 @@
     
     <script>
         // ⚠️ REPLACE THESE WITH YOUR ACTUAL SUPABASE CREDENTIALS
-        const SUPABASE_URL = 'https://dngkguspbqfyyelqhudw.supabase.co';  // e.g., 'https://abcdefgh.supabase.co'
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZ2tndXNwYnFmeXllbHFodWR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MDU1ODcsImV4cCI6MjA3NjE4MTU4N30.GykssFQNiOmMRCedMg-qI41Ieb9Og7NuippXuokNp7g';  // Your anon/public key
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL';  // e.g., 'https://abcdefgh.supabase.co'
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';  // Your anon/public key
         
         // Initialize Supabase client
         const { createClient } = supabase;
@@ -569,12 +562,11 @@
         const submitButton = document.getElementById('submitBtn');
         const emailInput = document.getElementById('email');
         const waitlistCount = document.getElementById('waitlistCount');
-		
         
         // Load waitlist count on page load
         async function loadWaitlistCount() {
             try {
-                const { count, error } = await client
+                const { count, error } = await supabase
                     .from('waitlist')
                     .select('*', { count: 'exact', head: true });
                 
@@ -585,8 +577,8 @@
                 console.error('Error loading count:', error);
                 waitlistCount.textContent = '0';
             }
-        }
-		        
+        }, 30000);
+        
         // Call on page load
         loadWaitlistCount();
         
@@ -606,30 +598,25 @@
             
             try {
                 // Insert email into Supabase
-                const { data, error } = await client
+                const { data, error } = await supabase
                     .from('waitlist')
-					.select('email')
-					.eq('email',email)
-					.maybeSingle();
-				
-				if (data) {
-					throw new Error('This email is already on the waitlist!');				
-				}
-                
-				const { error: InsertError } = await client
-					.from('waitlist')
-					.insert([
+                    .insert([
                         { 
                             email: email,
                             source: 'coming_soon_page'
                         }
                     ]);
                 
-                if (InsertError)throw InsertError;
+                if (error) {
+                    // Check if it's a duplicate email error
+                    if (error.code === '23505') {
+                        throw new Error('This email is already on the waitlist!');
+                    }
+                    throw error;
+                }
                 
-                // SUCCESS! Hide form, show success message
-                errorMessage.classList.remove('show');
-				form.querySelector('.form-group').style.display = 'none';
+                // Success!
+                form.querySelector('.form-group').style.display = 'none';
                 submitButton.style.display = 'none';
                 document.querySelector('.form-note').style.display = 'none';
                 successMessage.classList.add('show');
@@ -642,7 +629,7 @@
                 // (You'll need to set this up separately)
                 
             } catch (error) {
-                console.error('Submission error:', error);
+                console.error('Error:', error);
                 
                 // Show error message
                 errorMessage.textContent = error.message || 'Something went wrong. Please try again.';
